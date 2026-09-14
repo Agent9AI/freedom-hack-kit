@@ -1,0 +1,14 @@
+// Cloudflare Workers static-assets deploy. No Worker code runs: Cloudflare serves dist/ directly.
+// Deploy with: npm run build && npx wrangler deploy
+// Security headers live in public/_headers (copied into dist/ by the build).
+{
+  "name": "private-ai-starter",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist",
+    // Unknown paths return index.html so client-side routes work.
+    "not_found_handling": "single-page-application"
+  },
+  // Wrangler sends usage metrics by default. Keep them off for activist deployments.
+  "send_metrics": false
+}

@@ -1,0 +1,376 @@
+/* System fonts only: no web font downloads, nothing fetched from a third party. */
+:root {
+  color-scheme: light dark;
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --text: #1c1f22;
+  --muted: #5d656c;
+  --line: #dcdcd6;
+  --accent: #0f766e;
+  --accent-ink: #ffffff;
+  --user: #e3f1ee;
+  --danger: #b42318;
+  --warn: #8a5300;
+  --ok: #17663a;
+  --radius: 14px;
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121416;
+    --surface: #1b1e21;
+    --text: #e8eaec;
+    --muted: #9aa3ab;
+    --line: #2e3337;
+    --accent: #2bb3a3;
+    --accent-ink: #062623;
+    --user: #173532;
+    --danger: #f97066;
+    --warn: #f2b35b;
+    --ok: #6fd49a;
+  }
+}
+
+:lang(ar),
+:lang(fa) {
+  font-family: system-ui, "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.8;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 0.45rem 0.95rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--muted);
+}
+
+button.danger {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 45%, transparent);
+}
+
+button.danger[data-armed="true"] {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(0.75rem, env(safe-area-inset-top)) 1rem 0.75rem;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(8px);
+  border-block-end: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.brand h1 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.actions select {
+  width: auto;
+  border-radius: 999px;
+  padding-block: 0.4rem;
+}
+
+.pill {
+  font-size: 0.75rem;
+  padding: 0.05rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+
+.pill[data-state="online"] {
+  color: var(--ok);
+}
+
+.pill[data-state="offline"] {
+  color: var(--warn);
+}
+
+.notice {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 10%, transparent);
+}
+
+main {
+  flex: 1;
+  width: min(100%, 46rem);
+  margin-inline: auto;
+  padding: 1rem;
+}
+
+.tagline {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  margin-block: 18vh;
+}
+
+.messages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.msg {
+  max-width: 85%;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+/* In a column flexbox the cross axis follows text direction, so user bubbles move to the left in RTL. */
+.msg.user {
+  align-self: flex-end;
+  background: var(--user);
+  border-color: transparent;
+}
+
+.msg.assistant {
+  align-self: flex-start;
+}
+
+.who {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-block-end: 0.15rem;
+}
+
+/* plaintext: each paragraph picks its own direction, so Persian inside an English UI still reads right. */
+.body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  unicode-bidi: plaintext;
+}
+
+.msg.streaming .body::after {
+  content: "\258D";
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.tag {
+  display: inline-block;
+  margin-block-start: 0.3rem;
+  padding: 0 0.4rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 6px;
+}
+
+.composer {
+  position: sticky;
+  bottom: 0;
+  width: min(100%, 46rem);
+  margin-inline: auto;
+  padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
+  background: var(--bg);
+}
+
+.composer details {
+  margin-block-end: 0.5rem;
+}
+
+.composer summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-block-end: 0.4rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.row textarea {
+  flex: 1 1 14rem;
+}
+
+.row.end {
+  justify-content: flex-end;
+}
+
+.error {
+  white-space: pre-line;
+  color: var(--danger);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+}
+
+dialog {
+  width: min(100% - 2rem, 32rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  padding: 1.25rem;
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+
+dialog h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+dialog form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+dialog label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+}
+
+dialog label.check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+dialog label.check input {
+  width: auto;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  white-space: pre-line;
+}
+
+.hint:empty {
+  display: none;
+}
+
+.hint[data-tone="warn"] {
+  color: var(--warn);
+}
+
+.hint[data-tone="ok"] {
+  color: var(--ok);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg.streaming .body::after {
+    animation: none;
+  }
+}

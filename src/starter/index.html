@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0f766e" />
+    <title>Private Assistant</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header class="bar">
+      <div class="brand">
+        <h1 data-i18n="app.title">Private Assistant</h1>
+        <span id="net" class="pill" role="status" aria-live="polite"></span>
+      </div>
+      <nav class="actions">
+        <select id="lang" data-i18n-aria-label="settings.language" aria-label="Language"></select>
+        <button id="open-settings" type="button" data-i18n="nav.settings">Settings</button>
+        <button id="export" type="button" data-i18n="data.export">Export JSON</button>
+        <button id="wipe" type="button" class="danger" data-i18n="data.wipe">Panic wipe</button>
+      </nav>
+    </header>
+    <p id="drafted" class="notice" hidden data-i18n="i18n.machineDrafted"></p>
+    <p id="offline-hint" class="notice" hidden data-i18n="status.offlineHint"></p>
+
+    <main>
+      <p class="tagline" data-i18n="app.tagline">Messages go only to the model you choose in Settings.</p>
+      <ol id="messages" class="messages" aria-live="polite"></ol>
+      <p id="empty" class="empty" data-i18n="chat.empty">No messages yet. Pick a model in Settings, then say hello.</p>
+    </main>
+
+    <form id="composer" class="composer">
+      <details id="doc-box">
+        <summary data-i18n="doc.label">Attach a document (treated as untrusted)</summary>
+        <textarea id="doc" rows="4" data-i18n-placeholder="doc.placeholder"></textarea>
+      </details>
+      <div class="row">
+        <textarea id="prompt" rows="2" data-i18n-placeholder="chat.placeholder" data-i18n-aria-label="chat.placeholder"></textarea>
+        <button id="send" type="submit" class="primary" data-i18n="chat.send">Send</button>
+        <button id="stop" type="button" hidden data-i18n="chat.stop">Stop</button>
+        <button id="clear" type="button" class="ghost" data-i18n="chat.clear">Clear chat</button>
+      </div>
+      <p id="error" class="error" role="alert" hidden></p>
+    </form>
+
+    <dialog id="settings" aria-labelledby="settings-title">
+      <form id="settings-form">
+        <h2 id="settings-title" data-i18n="settings.title">Settings</h2>
+        <label>
+          <span data-i18n="settings.provider">Provider</span>
+          <select id="s-provider"></select>
+        </label>
+        <p id="s-provider-note" class="hint" hidden></p>
+        <label>
+          <span data-i18n="settings.baseUrl">Base URL</span>
+          <input id="s-baseUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" dir="ltr" />
+        </label>
+        <label>
+          <span data-i18n="settings.model">Model</span>
+          <input id="s-model" list="s-models" autocomplete="off" spellcheck="false" dir="ltr" />
+        </label>
+        <datalist id="s-models"></datalist>
+        <label>
+          <span data-i18n="settings.apiKey">API key</span>
+          <input id="s-apiKey" type="password" autocomplete="off" spellcheck="false" dir="ltr" />
+        </label>
+        <label class="check">
+          <input id="s-remember" type="checkbox" />
+          <span data-i18n="settings.rememberKey">Remember the key on this device</span>
+        </label>
+        <label>
+          <span data-i18n="settings.systemPrompt">System prompt</span>
+          <textarea id="s-system" rows="3"></textarea>
+        </label>
+        <p id="s-status" class="hint" role="status"></p>
+        <div class="row end">
+          <button id="s-fetch" type="button" data-i18n="settings.fetchModels">Fetch models</button>
+          <button id="s-close" type="button" data-i18n="settings.close">Close</button>
+          <button type="submit" class="primary" data-i18n="settings.save">Save</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

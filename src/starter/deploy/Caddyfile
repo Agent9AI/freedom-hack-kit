@@ -1,0 +1,34 @@
+# Static file server for the starter. Keep headers in sync with public/_headers (the Cloudflare copy).
+{
+	# No admin API, no automatic certificates: TLS belongs to whatever sits in front (Tailscale, a reverse proxy, Cloudflare).
+	admin off
+	auto_https off
+}
+
+:8080 {
+	root * /srv
+	encode zstd gzip
+
+	# Cloudflare's header file is not for browsers.
+	@hostconfig path /_headers /_redirects
+	respond @hostconfig 404
+
+	header {
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' {$CONNECT_SRC}; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+		Referrer-Policy no-referrer
+		X-Content-Type-Options nosniff
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+		Cross-Origin-Opener-Policy same-origin
+		-Server
+	}
+
+	@hashed path /assets/*
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+
+	@fresh path / /index.html /sw.js /manifest.webmanifest
+	header @fresh Cache-Control "no-cache"
+
+	# SPA fallback: unknown paths get the app shell.
+	try_files {path} /index.html
+	file_server
+}

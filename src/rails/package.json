@@ -1,0 +1,36 @@
+{
+  "name": "@freedom-kit/rails",
+  "version": "0.1.0",
+  "description": "Drop-in Nostr (censorship-resistant publishing, NIP-17 DMs) and Lightning (NWC, LNURL-pay, zaps) modules. No seed phrases held.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "smoke": "node scripts/live-smoke.mjs"
+  },
+  "dependencies": {
+    "nostr-tools": "2.25.2"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.2",
+    "typescript": "7.0.2",
+    "vitest": "5.0.0"
+  }
+}

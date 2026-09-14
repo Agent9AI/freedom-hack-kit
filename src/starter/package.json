@@ -1,0 +1,29 @@
+{
+  "name": "private-ai-starter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline-first PWA shell with a provider-switchable private LLM client, i18n with RTL, and a panic wipe.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "deploy:cf": "npx wrangler deploy",
+    "docker:up": "docker compose up --build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "fake-indexeddb": "^6.2.5",
+    "happy-dom": "^20.14.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.0"
+  }
+}

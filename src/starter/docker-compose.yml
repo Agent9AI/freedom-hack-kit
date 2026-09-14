@@ -1,0 +1,41 @@
+# Self-host the app: docker compose up --build, then open http://localhost:8088
+# Optional overrides come from a git-ignored .env file (variables listed in README.md). Nothing secret is needed to serve the app.
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      # Bound to this machine only. To serve phones on your LAN, change to "0.0.0.0:${HOST_PORT:-8088}:8080".
+      - "127.0.0.1:${HOST_PORT:-8088}:8080"
+    environment:
+      CONNECT_SRC: ${CONNECT_SRC:-http://localhost:11434 http://127.0.0.1:11434 http://localhost:8080 http://127.0.0.1:8080}
+    read_only: true
+    tmpfs:
+      - /data
+      - /config
+    cap_drop:
+      - ALL
+    cap_add:
+      # The caddy binary carries this file capability; without it in the bounding set the container cannot start.
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges:true
+
+  # Optional model server next to the app, for a Linux box with enough RAM. Off unless you ask for it:
+  #   docker compose --profile llm up -d
+  #   docker compose exec ollama ollama pull <model>
+  # Do not run this on a laptop that cannot spare the memory.
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["llm"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:11434:11434"
+    environment:
+      # Browsers call Ollama directly, so it must allow the app's origin.
+      OLLAMA_ORIGINS: http://localhost:${HOST_PORT:-8088},http://127.0.0.1:${HOST_PORT:-8088}
+    volumes:
+      - ollama:/root/.ollama
+
+volumes:
+  ollama: {}

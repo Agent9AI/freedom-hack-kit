@@ -1,0 +1,14 @@
+# Cloudflare Workers static assets reads this file. Keep it in sync with deploy/Caddyfile.
+# connect-src lists the model servers the page may call. Add your model host here (HTTPS) when you deploy.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' http://localhost:11434 http://127.0.0.1:11434 http://localhost:8080 http://127.0.0.1:8080; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/sw.js
+  Cache-Control: no-cache
