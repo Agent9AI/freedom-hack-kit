@@ -3,6 +3,26 @@
   "version": "0.1.0",
   "description": "Drop-in Nostr (censorship-resistant publishing, NIP-17 DMs) and Lightning (NWC, LNURL-pay, zaps) modules. No seed phrases held.",
   "license": "MIT",
+  "author": "Agent9AI",
+  "homepage": "https://github.com/Agent9AI/freedom-hack-kit/tree/main/src/rails#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Agent9AI/freedom-hack-kit.git",
+    "directory": "src/rails"
+  },
+  "bugs": {
+    "url": "https://github.com/Agent9AI/freedom-hack-kit/issues"
+  },
+  "keywords": [
+    "nostr",
+    "lightning",
+    "nwc",
+    "nostr-wallet-connect",
+    "lnurl",
+    "zaps",
+    "nip-17",
+    "censorship-resistance"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,13 +34,19 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=20.19"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run build",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "smoke": "node scripts/live-smoke.mjs"
