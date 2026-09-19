@@ -99,5 +99,10 @@ scratch after kickoff, and the commit history starts Thursday morning.
 (commit `ffc2728`, 2026-09-14 02:06 UTC) and the kit commit `df276b9`. The commands in
 section 5 are ordinary git and npm, and were checked against this repo's history.
 
-**Untested:** the tier 3 regeneration path, until the swarm prompts are re-run. The
-rule that decides the tier, until an organizer answers.
+**Tier 3 is verified as of 2026-09-19.** The archived `starter` prompt was re-run from
+scratch in a clean directory with no access to the existing code: 10.6 minutes, 30/30
+tests passing, build green, opsec audit PASS. See
+`docs/swarm/AGENT_PROMPTS.md`, "Re-run verification". Regenerating the full kit means
+running the five prompts in parallel, about an hour on the day.
+
+**Untested:** the rule that decides the tier, until an organizer answers.

@@ -59,7 +59,7 @@ HRF AI Fund themes: privacy over centralized data, local/offline inference, acce
 |---|---|---|
 | intel | `docs/research/` | `INTEL.md`: captain intel for III, tool setup notes, problem-archetype bank |
 | opsec | `docs/security/`, `scripts/opsec-audit.sh` | Activist threat checklist + an audit script that flags telemetry/CDN/PII leaks |
-| starter | `src/starter/`, `tests/starter/` | Offline-first PWA starter with provider-switchable private LLM client, i18n + RTL, self-host + CF deploy |
-| rails | `src/rails/`, `tests/rails/` | Nostr (identity, publish, subscribe, encrypted DM) + bitcoin (NWC invoices/zaps) modules with mocked tests |
+| starter | `src/starter/` (tests inside, at `src/starter/tests/`) | Offline-first PWA starter with provider-switchable private LLM client, i18n + RTL, self-host + CF deploy |
+| rails | `src/rails/` (tests inside, at `src/rails/tests/`) | Nostr (identity, publish, subscribe, encrypted DM) + bitcoin (NWC invoices/zaps) modules with mocked tests |
 | runbook | `docs/runbook/`, `scripts/event-day-swarm.sh` | Hour-by-hour runbook, captain intake script, pitch template keyed to judging, event-day ruflo swarm launcher |
 | queen (main session) | everything | Integration, runs tests + opsec audit, final report |

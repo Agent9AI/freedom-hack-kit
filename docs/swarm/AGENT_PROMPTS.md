@@ -151,3 +151,36 @@ Keep each file under 500 lines and scannable. When done run: `cd <repo root> && 
 
 Final report to the coordinator, under 250 words: files created, the pasted test result, the exact ruflo flags you verified, and the 3 prep tasks Terry should do this week that only a human can do.
 ```
+
+---
+
+## Re-run verification (tier 3 regeneration)
+
+The `starter` prompt above was re-run from scratch on 2026-09-19 in a clean directory,
+with no access to the existing implementation, to test whether these prompts can
+rebuild the kit after kickoff if pre-existing code turns out to be disallowed. See
+`docs/PROVENANCE_TEMPLATE.md` for what the tiers mean.
+
+**Result: it works.** 10.6 minutes wall clock, one agent. Produced vanilla TypeScript,
+9.4 KB gzipped app JS plus a 1.0 KB service worker, 30/30 tests passing, `npm run build`
+green, opsec audit `0 findings, PASS` including `--strict`.
+
+Two independent runs of the same prompt converged on the same non-obvious decisions:
+vanilla TS over a framework, and letting loopback hosts through the offline guard
+because a model on the device still answers with no network.
+
+Differences worth knowing if you re-run it:
+
+- The re-run set CSP `connect-src *` because the model host is typed at runtime. The
+  original is stricter: a `CONNECT_SRC` variable listing specific origins. Prefer the
+  original. Add a line to the prompt saying so.
+- The re-run produced 30 tests against the original's 47. Same areas covered, less
+  depth. Budget a second pass if the tests matter for the pitch.
+- The prompt's "shell JS under 50 KB gzipped" does not say whether the service worker
+  and CSS count. Both runs came in far under either reading, so it never bound.
+- Add the absolute path to `scripts/opsec-audit.sh` when re-running, and confirm the
+  npm cache is writable first.
+
+Regenerating the whole kit means running the five prompts in parallel, which is what
+the original swarm did in 33 minutes total (`c5533b9` 21:26 to `df276b9` 21:59 on
+2026-09-13). Budget an hour on event day and run it alongside captain intake.
