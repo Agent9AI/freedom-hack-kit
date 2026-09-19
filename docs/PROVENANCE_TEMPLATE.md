@@ -29,7 +29,7 @@ Everything written before kickoff, with something a third party can verify.
 
 | Component | How it enters this repo | Version or commit | License | Written |
 |---|---|---|---|---|
-| `@freedom-kit/rails` | npm dependency | 0.1.0 | MIT | 2026-09-13, before the event |
+| `freedom-kit-rails` | npm dependency | 0.1.0 | MIT | 2026-09-13, before the event |
 | `private-ai-starter` shell | (delete the row if regenerated) | commit `df276b9` | MIT | 2026-09-13, before the event |
 | Third-party libraries | npm dependencies | see `package-lock.json` | various OSS | before the event |
 | Runbook, intake script, opsec checklist | reference documents, not code | `Agent9AI/freedom-hack-kit` | MIT | 2026-09-13, before the event |
@@ -74,7 +74,7 @@ git log --since='2026-09-24 11:00' --format='%h %ad %s' --date=iso
 git log --since='2026-09-24 11:00' --numstat --format='' | awk '{a+=$1;d+=$2} END {print a" added, "d" deleted"}'
 
 # Which kit pieces are dependencies rather than copied source.
-npm ls @freedom-kit/rails 2>/dev/null || echo "not installed as a dependency"
+npm ls freedom-kit-rails 2>/dev/null || echo "not installed as a dependency"
 
 # Prove no pre-event file was copied in (tier 3): every tracked file first appears after kickoff.
 git log --diff-filter=A --format='%ad' --date=iso --name-only | head -20

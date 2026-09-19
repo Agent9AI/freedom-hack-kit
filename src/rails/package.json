@@ -1,5 +1,5 @@
 {
-  "name": "@freedom-kit/rails",
+  "name": "freedom-kit-rails",
   "version": "0.1.0",
   "description": "Drop-in Nostr (censorship-resistant publishing, NIP-17 DMs) and Lightning (NWC, LNURL-pay, zaps) modules. No seed phrases held.",
   "license": "MIT",

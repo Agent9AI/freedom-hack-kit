@@ -20,7 +20,7 @@ One runtime dependency: `nostr-tools` 2.25.2. No analytics, no CDN, no calls to 
 ```bash
 cp -r path/to/kit/src/rails ./rails
 cd rails && npm install && npm run build && cd ..
-npm install ./rails          # adds "@freedom-kit/rails": "file:rails"
+npm install ./rails          # adds "freedom-kit-rails": "file:rails"
 ```
 
 Runtime: modern browsers, or Node 20.19+ (needed by nostr-tools' crypto). Browsers and Node 22+ have a built-in WebSocket. On Node 20 pass one in: `new RelayPool({ webSocketImplementation: WebSocket })` with `WebSocket` from the `ws` package.
@@ -30,7 +30,7 @@ Runtime: modern browsers, or Node 20.19+ (needed by nostr-tools' crypto). Browse
 ### 1. Create an identity
 
 ```ts
-import { RelayPool, buildProfile, createIdentity, exportEncryptedKey, importEncryptedKey } from '@freedom-kit/rails';
+import { RelayPool, buildProfile, createIdentity, exportEncryptedKey, importEncryptedKey } from 'freedom-kit-rails';
 
 const me = createIdentity();
 showToUser(me.npub); // public, safe to share
@@ -46,7 +46,7 @@ await pool.publish(buildProfile(me, { name: 'Amina', about: 'Reporting from dist
 ### 2. Post
 
 ```ts
-import { publishNote } from '@freedom-kit/rails';
+import { publishNote } from 'freedom-kit-rails';
 
 const { event, result } = await publishNote(pool, me, {
   content: 'Polling station 12 closed two hours early.',
@@ -59,7 +59,7 @@ showToast(result.summary); // "Published to 3 of 4 relays"
 ### 3. Read a feed
 
 ```ts
-import { fetchFeed, fetchProfile, subscribeFeed } from '@freedom-kit/rails';
+import { fetchFeed, fetchProfile, subscribeFeed } from 'freedom-kit-rails';
 
 const latest = await fetchFeed(pool, { hashtags: ['election'], limit: 50 }); // newest first
 const live = subscribeFeed(pool, { hashtags: ['election'] }, (note) => render(note));
@@ -72,7 +72,7 @@ const profile = await fetchProfile(pool, note.pubkey); // name, picture, lud16, 
 ### 4. Send a private message
 
 ```ts
-import { sendDm, subscribeDms } from '@freedom-kit/rails';
+import { sendDm, subscribeDms } from 'freedom-kit-rails';
 
 const sent = await sendDm(pool, me, 'npub1recipient...', 'Meeting moved to the north entrance.');
 showToast(sent.toRecipient.summary);
@@ -91,7 +91,7 @@ Relays see only a throwaway key, the recipient's public key, and a fake timestam
 The receiver shows an invoice from their own wallet:
 
 ```ts
-import { NwcClient } from '@freedom-kit/rails';
+import { NwcClient } from 'freedom-kit-rails';
 
 const wallet = new NwcClient(nwcStringPastedByUser); // "nostr+walletconnect://..."
 const { invoice } = await wallet.makeInvoice({ amountSats: 1000, description: 'Support independent reporting' });
@@ -101,7 +101,7 @@ showQrCode(`lightning:${invoice}`); // bundle a QR library locally, no CDN
 A supporter tips a Lightning address, or zaps a Nostr profile:
 
 ```ts
-import { lightningAddressToInvoice, requestZapInvoice } from '@freedom-kit/rails';
+import { lightningAddressToInvoice, requestZapInvoice } from 'freedom-kit-rails';
 
 const tip = await lightningAddressToInvoice('amina@getalby.com', 1000, { comment: 'thank you' });
 
@@ -119,7 +119,7 @@ The min and max amounts the service allows are enforced before any request. An i
 ### 6. Pay an invoice
 
 ```ts
-import { NwcClient, NwcError } from '@freedom-kit/rails';
+import { NwcClient, NwcError } from 'freedom-kit-rails';
 
 try {
   const { preimage, feesPaidSats } = await wallet.payInvoice(invoice);
